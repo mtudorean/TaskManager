@@ -1,10 +1,11 @@
 import { useState } from "react";
 import TaskForm from "./components/TaskForm";
 import Task from "./components/Task";
+import "./App.css";
 
 function App() {
   const [tasks, setTasks] = useState([]);
-  const [filter, setFilter] = useState("all"); 
+  const [filter, setFilter] = useState("all"); // "all" | "active" | "completed"
 
   function addTask(title) {
     const newTask = { id: Date.now(), title, completed: false };
@@ -33,23 +34,39 @@ function App() {
   });
 
   return (
-    <main>
-      <h1>Task Manager</h1>
-      <p>Total sarcini: {totalCount}</p>
-      <p>Finalizate: {completedCount}</p>
+    <main className="app">
+      <h1 className="app__title">Task Manager</h1>
+      <p className="app__stats">
+        {totalCount} sarcini · {completedCount} finalizate
+      </p>
 
       <TaskForm onAddTask={addTask} />
 
-      <div>
-        <button onClick={() => setFilter("all")}>Toate</button>
-        <button onClick={() => setFilter("active")}>Active</button>
-        <button onClick={() => setFilter("completed")}>Finalizate</button>
+      <div className="app__filters">
+        <button
+          className={filter === "all" ? "is-active" : ""}
+          onClick={() => setFilter("all")}
+        >
+          Toate
+        </button>
+        <button
+          className={filter === "active" ? "is-active" : ""}
+          onClick={() => setFilter("active")}
+        >
+          Active
+        </button>
+        <button
+          className={filter === "completed" ? "is-active" : ""}
+          onClick={() => setFilter("completed")}
+        >
+          Finalizate
+        </button>
       </div>
 
       {tasks.length === 0 ? (
-        <p>Nu există sarcini momentan.</p>
+        <p className="app__empty">Nu există sarcini momentan.</p>
       ) : (
-        <ul>
+        <ul className="task-list">
           {visibleTasks.map((task) => (
             <Task
               key={task.id}
