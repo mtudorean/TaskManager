@@ -21,21 +21,31 @@ function App() {
   function deleteTask(id) {
     setTasks((prev) => prev.filter((task) => task.id !== id));
   }
+  const totalCount = tasks.length;
+  const completedCount = tasks.filter((task) => task.completed).length;
 
   return (
     <main>
       <h1>Task Manager</h1>
+      <p>Total sarcini: {totalCount}</p>
+      <p>Finalizate: {completedCount}</p>
+      
       <TaskForm onAddTask={addTask} />
-      <ul>
-        {tasks.map((task) => (
-          <Task
-            key={task.id}
-            task={task}
-            onToggle={toggleTask}
-            onDelete={deleteTask}
-          />
-        ))}
-      </ul>
+
+      {tasks.length === 0 ? (
+        <p>Nu există sarcini momentan.</p>
+      ) : (
+        <ul>
+          {tasks.map((task) => (
+            <Task
+              key={task.id}
+              task={task}
+              onToggle={toggleTask}
+              onDelete={deleteTask}
+            />
+          ))}
+        </ul>
+      )}
     </main>
   );
 }
