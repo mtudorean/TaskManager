@@ -1,9 +1,15 @@
-function Task({ task }) {
+function Task({ task, onToggle, onDelete }) {
   return (
-    <li>
-      <input type="checkbox" checked={task.completed} readOnly />
-      <span>{task.title}</span>
-      <button>Șterge</button>
+    <li className={task.completed ? "task task--completed" : "task"}>
+      <label>
+        <input
+          type="checkbox"
+          checked={task.completed}
+          onChange={() => onToggle(task.id)}
+        />
+        <span>{task.title}</span>
+      </label>
+      <button onClick={() => onDelete(task.id)}>Șterge</button>
     </li>
   );
 }
